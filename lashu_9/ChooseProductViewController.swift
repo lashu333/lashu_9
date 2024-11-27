@@ -36,7 +36,10 @@ class ChooseProductViewController: UIViewController{
     }
     
     //MARK: - functions
-    
+    func setUpTextFields(){
+        productQuantityTextField?.keyboardType = .decimalPad
+        productPriceTextField?.keyboardType = .decimalPad
+    }
     func textFieldIsEmpty() -> Bool{
         let isEmpty = [productNameTextField?.text, productQuantityTextField?.text, productPriceTextField?.text]
             .contains(where: { $0?.isEmpty ?? true })

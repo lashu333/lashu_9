@@ -42,7 +42,10 @@ class ChequeViewController: UIViewController, ChooseProductViewControllerDelegat
         productsAmountLabel?.text = String(count)
         productsQuantityLabel?.text = String(quantityKg)
         totalPriceLabel?.text = String(calculated)
-
+        productsAmountLabel?.text == "0" ? chequeIdIfNoProductsWereSent() : nil
+    }
+    func chequeIdIfNoProductsWereSent(){
+        chequeIDLabel?.text = "No products were sent"
     }
     /*
     // MARK: - Navigation
