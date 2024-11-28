@@ -18,6 +18,10 @@ class ChooseProductViewController: UIViewController{
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
+        setupUI()
+        configureTextFields()
+        configureCategoryButton()
+        configureActionButtons()
         setUpCategoryPicker()
     }
     @IBAction func didTapAddProductButton(_ sender: UIButton) {
@@ -75,6 +79,66 @@ class ChooseProductViewController: UIViewController{
         let menu = UIMenu(title: "Category", children: [menuItem1, menuItem2, menuItem3, menuItem4])
         productCategoryPickerButton.menu = menu
         productCategoryPickerButton.showsMenuAsPrimaryAction = true
+    }
+    
+    
+    // MARK: - UI
+    private func configureTextFields() {
+        let textFields = [
+            productNameTextField,
+            productQuantityTextField,
+            productPriceTextField
+        ]
+        
+        textFields.forEach { textField in
+            textField?.backgroundColor = UIColor(hex: "#F7F9F9")
+            textField?.layer.cornerRadius = 12
+            textField?.layer.shadowColor = UIColor.black.cgColor
+            textField?.layer.shadowOffset = CGSize(width: 0, height: 2)
+            textField?.layer.shadowRadius = 4
+            textField?.layer.shadowOpacity = 0.1
+            textField?.borderStyle = .none
+            textField?.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 15, height: 0))
+            textField?.leftViewMode = .always
+        }
+    }
+    private func configureCategoryButton() {
+        productCategoryPickerButton.layer.cornerRadius = 12
+        productCategoryPickerButton.backgroundColor = UIColor(hex: "#2ECC71")
+        productCategoryPickerButton.setTitleColor(.white, for: .normal)
+        productCategoryPickerButton.titleLabel?.font = .systemFont(ofSize: 18, weight: .semibold)
+    }
+    private func configureActionButtons() {
+        let buttons = [
+            view.subviews.first(where: { $0.tag == 1 }) as? UIButton,
+            view.subviews.first(where: { $0.tag == 2 }) as? UIButton
+        ]
+        
+        buttons.forEach { button in
+            button?.layer.cornerRadius = 15
+            button?.titleLabel?.font = .systemFont(ofSize: 20, weight: .semibold)
+            button?.addTarget(self, action: #selector(buttonTouchAnimation), for: [.touchDown, .touchUpInside])
+        }
+    }
+    
+    @objc private func buttonTouchAnimation(_ sender: UIButton) {
+        UIView.animate(withDuration: 0.1) {
+            sender.transform = sender.isTouchInside ? CGAffineTransform(scaleX: 0.95, y: 0.95) : .identity
+        }
+    }
+    
+    private func setupUI() {
+        // Overall view styling
+        view.backgroundColor = UIColor(hex: "#F2F4C7")
+        
+        // Add subtle gradient background if desired
+        let gradientLayer = CAGradientLayer()
+        gradientLayer.colors = [
+            UIColor(hex: "#F2F4C7").cgColor,
+            UIColor(hex: "#F7F9F9").cgColor
+        ]
+        gradientLayer.frame = view.bounds
+        view.layer.insertSublayer(gradientLayer, at: 0)
     }
 }
 
